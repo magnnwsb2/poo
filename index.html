@@ -20,6 +20,7 @@
     </nav>
     <section id="tab-cadastrar" class="tab-content active">
       <form id="form-aluno">
+        <h2 id="titulo-form">Cadastrar aluno</h2>
         <label for="nome">Nome:</label>
         <input id="nome" type="text" maxlength="100" required>
         <label for="n1">Nota 1:</label>
@@ -28,7 +29,8 @@
         <input id="n2" type="number" min="0" max="10" step="any" required>
         <label for="n3">Nota 3:</label>
         <input id="n3" type="number" min="0" max="10" step="any" required>
-        <button type="submit" class="btn-salvar">Salvar Aluno</button>
+        <button type="submit" class="btn-salvar" id="btn-salvar">Salvar Aluno</button>
+        <button type="button" class="btn-cancelar" id="btn-cancelar" hidden>Cancelar edição</button>
         <p id="mensagem" role="status" aria-live="polite"></p>
       </form>
     </section>
