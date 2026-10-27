@@ -19,3 +19,7 @@ input:focus-visible, button:focus-visible { outline: 2px solid var(--destaque); 
 .lista-alunos { list-style: none; padding: 0; }
 .lista-alunos li { padding: 10px 0; border-bottom: 1px solid var(--linha); overflow-wrap: anywhere; }
 #mensagem { min-height: 1.2em; }
+
+.acoes-aluno { display: flex; gap: 8px; margin-top: 8px; }
+.btn-editar, .btn-cancelar { padding: 8px 12px; border: 1px solid var(--borda); border-radius: 4px; background: var(--aba); color: var(--texto); cursor: pointer; }
+.btn-cancelar[hidden] { display: none; }
