@@ -10,7 +10,10 @@
 </head>
 <body>
   <main>
-    <h1>Sistema Escolar</h1>
+    <header class="cabecalho">
+      <h1>Sistema Escolar</h1>
+      <button type="button" id="btn-tema" class="btn-tema" aria-label="Ativar modo escuro" aria-pressed="false">🌙 Modo escuro</button>
+    </header>
     <nav class="tabs-container" aria-label="Navegação do sistema">
       <button type="button" class="tab-button active" id="btn-cadastrar" aria-pressed="true" onclick="cadastrar()">Cadastrar</button>
       <button type="button" class="tab-button" id="btn-listar" aria-pressed="false" onclick="listar()">Listar Alunos</button>
