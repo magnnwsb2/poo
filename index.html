@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./Aluno.js" defer></script>
+  <script src="./script.js" defer></script>
+  <title>Sistema Escolar</title>
+</head>
+<body>
+  <div class="tabs-container">
+    <button class="tab-button active" id="btn-cadastrar" onclick="cadastrar()">Cadastrar</button>
+    <button class="tab-button" id="btn-listar" onclick="listar()">Listar Alunos</button>
+  </div>
+  <div id="tab-cadastrar" class="tab-content active">
+    <label for="nome">Nome:</label><input id="nome" type="text">
+    <label for="n1">Nota 1:</label><input id="n1" type="number" min="0" max="10" step="any">
+    <label for="n2">Nota 2:</label><input id="n2" type="number" min="0" max="10" step="any">
+    <label for="n3">Nota 3:</label><input id="n3" type="number" min="0" max="10" step="any">
+    <button onclick="salvar()" class="btn-salvar">Salvar Aluno</button>
+  </div>
+  <div id="tab-listar" class="tab-content">
+    <h3>Alunos Cadastrados</h3>
+    <ul class="lista-alunos" id="alunos"><li>Nenhum aluno cadastrado ainda.</li></ul>
+  </div>
+</body>
+</html>
