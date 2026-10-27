@@ -1,4 +1,5 @@
 let turma = [];
+let indiceEmEdicao = null;
 
 function salvar() {
   const nome = document.getElementById('nome').value.trim();
@@ -13,11 +14,24 @@ function salvar() {
     mensagem.textContent = 'As notas devem estar entre 0 e 10.';
     return;
   }
-  const aluno = new Aluno(nome, notas[0], notas[1], notas[2]);
-  aluno.gerarMedia();
-  aluno.gerarEstado();
-  turma.push(aluno);
-  mensagem.textContent = 'Aluno cadastrado com sucesso!';
+  if (indiceEmEdicao === null) {
+    const aluno = new Aluno(nome, notas[0], notas[1], notas[2]);
+    aluno.gerarMedia();
+    aluno.gerarEstado();
+    turma.push(aluno);
+    mensagem.textContent = 'Aluno cadastrado com sucesso!';
+  } else {
+    const aluno = turma[indiceEmEdicao];
+    aluno.nome = nome;
+    aluno.nota1 = notas[0];
+    aluno.nota2 = notas[1];
+    aluno.nota3 = notas[2];
+    aluno.gerarMedia();
+    aluno.gerarEstado();
+    mensagem.textContent = 'Dados do aluno atualizados com sucesso!';
+  }
+  indiceEmEdicao = null;
+  atualizarModoFormulario();
   document.getElementById('form-aluno').reset();
 }
 
@@ -31,7 +45,38 @@ function mudarAba(aba) {
   document.getElementById('btn-listar').setAttribute('aria-pressed', String(!cadastro));
 }
 
-function cadastrar() { mudarAba('cadastrar'); }
+function atualizarModoFormulario() {
+  const editando = indiceEmEdicao !== null;
+  document.getElementById('titulo-form').textContent = editando ? 'Editar aluno' : 'Cadastrar aluno';
+  document.getElementById('btn-salvar').textContent = editando ? 'Salvar alterações' : 'Salvar Aluno';
+  document.getElementById('btn-cancelar').hidden = !editando;
+}
+
+function cancelarEdicao() {
+  indiceEmEdicao = null;
+  document.getElementById('form-aluno').reset();
+  document.getElementById('mensagem').textContent = '';
+  atualizarModoFormulario();
+}
+
+function cadastrar() {
+  if (indiceEmEdicao !== null) cancelarEdicao();
+  mudarAba('cadastrar');
+}
+
+function editarAluno(indice) {
+  const aluno = turma[indice];
+  if (!aluno) return;
+  indiceEmEdicao = indice;
+  document.getElementById('nome').value = aluno.nome;
+  document.getElementById('n1').value = aluno.nota1;
+  document.getElementById('n2').value = aluno.nota2;
+  document.getElementById('n3').value = aluno.nota3;
+  document.getElementById('mensagem').textContent = '';
+  atualizarModoFormulario();
+  mudarAba('cadastrar');
+  document.getElementById('nome').focus();
+}
 
 function listar() {
   mudarAba('listar');
@@ -43,11 +88,25 @@ function listar() {
     lista.appendChild(item);
     return;
   }
-  for (const aluno of turma) {
+  turma.forEach(function(aluno, indice) {
     const item = document.createElement('li');
-    item.textContent = aluno.nome + ' - ' + aluno.media.toFixed(2) + ' - ' + aluno.estado;
+    const detalhes = document.createElement('div');
+    detalhes.textContent = aluno.nome + ' - Notas: ' +
+      [aluno.nota1, aluno.nota2, aluno.nota3].join(', ') +
+      ' - Média: ' + aluno.media.toFixed(2) + ' - ' + aluno.estado;
+    const acoes = document.createElement('div');
+    acoes.className = 'acoes-aluno';
+    const botaoEditar = document.createElement('button');
+    botaoEditar.type = 'button';
+    botaoEditar.className = 'btn-editar';
+    botaoEditar.textContent = 'Editar';
+    botaoEditar.setAttribute('aria-label', 'Editar aluno ' + aluno.nome);
+    botaoEditar.addEventListener('click', function() { editarAluno(indice); });
+    acoes.appendChild(botaoEditar);
+    item.appendChild(detalhes);
+    item.appendChild(acoes);
     lista.appendChild(item);
-  }
+  });
 }
 
 function aplicarTema(escuro) {
@@ -72,3 +131,5 @@ document.getElementById('form-aluno').addEventListener('submit', function(evento
   evento.preventDefault();
   salvar();
 });
+
+document.getElementById('btn-cancelar').addEventListener('click', cancelarEdicao);
