@@ -3,26 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Escolar</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="./Aluno.js" defer></script>
   <script src="./script.js" defer></script>
-  <title>Sistema Escolar</title>
 </head>
 <body>
-  <div class="tabs-container">
-    <button class="tab-button active" id="btn-cadastrar" onclick="cadastrar()">Cadastrar</button>
-    <button class="tab-button" id="btn-listar" onclick="listar()">Listar Alunos</button>
-  </div>
-  <div id="tab-cadastrar" class="tab-content active">
-    <label for="nome">Nome:</label><input id="nome" type="text">
-    <label for="n1">Nota 1:</label><input id="n1" type="number" min="0" max="10" step="any">
-    <label for="n2">Nota 2:</label><input id="n2" type="number" min="0" max="10" step="any">
-    <label for="n3">Nota 3:</label><input id="n3" type="number" min="0" max="10" step="any">
-    <button onclick="salvar()" class="btn-salvar">Salvar Aluno</button>
-  </div>
-  <div id="tab-listar" class="tab-content">
-    <h3>Alunos Cadastrados</h3>
-    <ul class="lista-alunos" id="alunos"><li>Nenhum aluno cadastrado ainda.</li></ul>
-  </div>
+  <main>
+    <h1>Sistema Escolar</h1>
+    <nav class="tabs-container" aria-label="Navegação do sistema">
+      <button type="button" class="tab-button active" id="btn-cadastrar" aria-pressed="true" onclick="cadastrar()">Cadastrar</button>
+      <button type="button" class="tab-button" id="btn-listar" aria-pressed="false" onclick="listar()">Listar Alunos</button>
+    </nav>
+    <section id="tab-cadastrar" class="tab-content active">
+      <form id="form-aluno">
+        <label for="nome">Nome:</label>
+        <input id="nome" type="text" maxlength="100" required>
+        <label for="n1">Nota 1:</label>
+        <input id="n1" type="number" min="0" max="10" step="any" required>
+        <label for="n2">Nota 2:</label>
+        <input id="n2" type="number" min="0" max="10" step="any" required>
+        <label for="n3">Nota 3:</label>
+        <input id="n3" type="number" min="0" max="10" step="any" required>
+        <button type="submit" class="btn-salvar">Salvar Aluno</button>
+        <p id="mensagem" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <section id="tab-listar" class="tab-content" hidden>
+      <h2>Alunos Cadastrados</h2>
+      <ul class="lista-alunos" id="alunos"><li>Nenhum aluno cadastrado ainda.</li></ul>
+    </section>
+  </main>
 </body>
 </html>
