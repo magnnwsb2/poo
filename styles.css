@@ -1,17 +1,21 @@
 * { box-sizing: border-box; }
-body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #222; }
+:root { color-scheme: light; --fundo: #fff; --texto: #222; --campo: #fff; --borda: #aaa; --aba: #f0f0f0; --linha: #ddd; --destaque: #0056b3; --salvar: #23783a; }
+body.dark-mode { color-scheme: dark; --fundo: #171b23; --texto: #f2f4f8; --campo: #262d38; --borda: #7b8798; --aba: #303846; --linha: #4a5565; --destaque: #397fe0; --salvar: #23783a; }
+body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: var(--fundo); color: var(--texto); }
 main { max-width: 420px; margin: 0 auto; }
-h1 { font-size: 1.5rem; }
+.cabecalho { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+h1 { font-size: 1.5rem; margin: 0; }
 h2 { font-size: 1.15rem; }
-.tabs-container { display: flex; gap: 5px; border-bottom: 2px solid #ccc; padding-bottom: 5px; }
-.tab-button { flex: 1; padding: 10px; background: #f0f0f0; border: 1px solid #ccc; cursor: pointer; font-size: 14px; border-radius: 4px 4px 0 0; }
-.tab-button.active { background: #0056b3; color: #fff; border-color: #0056b3; font-weight: bold; }
+.btn-tema { padding: 8px 10px; border: 1px solid var(--borda); border-radius: 6px; background: var(--aba); color: var(--texto); cursor: pointer; }
+.tabs-container { display: flex; gap: 5px; border-bottom: 2px solid var(--linha); padding-bottom: 5px; }
+.tab-button { flex: 1; padding: 10px; background: var(--aba); color: var(--texto); border: 1px solid var(--borda); cursor: pointer; font-size: 14px; border-radius: 4px 4px 0 0; }
+.tab-button.active { background: var(--destaque); color: #fff; border-color: var(--destaque); font-weight: bold; }
 .tab-content { margin-top: 16px; }
 .tab-content[hidden] { display: none; }
 #form-aluno { display: flex; flex-direction: column; gap: 10px; }
-input { padding: 8px; border: 1px solid #aaa; border-radius: 4px; font-size: 16px; width: 100%; }
-input:focus-visible, button:focus-visible { outline: 2px solid #0056b3; outline-offset: 2px; }
-.btn-salvar { padding: 12px; background: #23783a; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+input { padding: 8px; border: 1px solid var(--borda); border-radius: 4px; font-size: 16px; width: 100%; background: var(--campo); color: var(--texto); }
+input:focus-visible, button:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+.btn-salvar { padding: 12px; background: var(--salvar); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
 .lista-alunos { list-style: none; padding: 0; }
-.lista-alunos li { padding: 10px 0; border-bottom: 1px solid #ddd; overflow-wrap: anywhere; }
+.lista-alunos li { padding: 10px 0; border-bottom: 1px solid var(--linha); overflow-wrap: anywhere; }
 #mensagem { min-height: 1.2em; }
