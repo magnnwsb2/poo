@@ -1,48 +1,56 @@
 let turma = [];
 
 function salvar() {
-  let nome = document.getElementById('nome').value.trim();
-  let campos = ['n1', 'n2', 'n3'].map(id => document.getElementById(id));
+  const nome = document.getElementById('nome').value.trim();
+  const campos = ['n1', 'n2', 'n3'].map(id => document.getElementById(id));
+  const mensagem = document.getElementById('mensagem');
   if (!nome || campos.some(campo => campo.value.trim() === '')) {
-    alert('Preencha o nome e as três notas.');
+    mensagem.textContent = 'Preencha o nome e as três notas.';
     return;
   }
-  let notas = campos.map(campo => Number(campo.value));
+  const notas = campos.map(campo => Number(campo.value));
   if (notas.some(nota => !Number.isFinite(nota) || nota < 0 || nota > 10)) {
-    alert('Informe notas válidas entre 0 e 10.');
+    mensagem.textContent = 'As notas devem estar entre 0 e 10.';
     return;
   }
-  let a1 = new Aluno(nome, notas[0], notas[1], notas[2]);
-  let m = a1.gerarMedia(a1.nota1, a1.nota2, a1.nota3);
-  a1.gerarEstado(m);
-  turma[turma.length] = a1;
-  alert('Aluno cadastrado!');
+  const aluno = new Aluno(nome, notas[0], notas[1], notas[2]);
+  aluno.gerarMedia();
+  aluno.gerarEstado();
+  turma.push(aluno);
+  mensagem.textContent = 'Aluno cadastrado com sucesso!';
+  document.getElementById('form-aluno').reset();
 }
 
-function listar() {
-  document.getElementById('btn-listar').classList.add('active');
-  document.getElementById('btn-cadastrar').classList.remove('active');
-  document.getElementById('tab-listar').classList.add('active');
-  document.getElementById('tab-cadastrar').classList.remove('active');
+function mudarAba(aba) {
+  const cadastro = aba === 'cadastrar';
+  document.getElementById('tab-cadastrar').hidden = !cadastro;
+  document.getElementById('tab-listar').hidden = cadastro;
+  document.getElementById('btn-cadastrar').classList.toggle('active', cadastro);
+  document.getElementById('btn-listar').classList.toggle('active', !cadastro);
+  document.getElementById('btn-cadastrar').setAttribute('aria-pressed', String(cadastro));
+  document.getElementById('btn-listar').setAttribute('aria-pressed', String(!cadastro));
+}
 
-  let lista = document.getElementById('alunos');
+function cadastrar() { mudarAba('cadastrar'); }
+
+function listar() {
+  mudarAba('listar');
+  const lista = document.getElementById('alunos');
   lista.replaceChildren();
   if (turma.length === 0) {
-    let item = document.createElement('li');
+    const item = document.createElement('li');
     item.textContent = 'Nenhum aluno cadastrado ainda.';
     lista.appendChild(item);
     return;
   }
-  for (let i = 0; i < turma.length; i++) {
-    let item = document.createElement('li');
-    item.textContent = turma[i].nome + ' - ' + turma[i].media.toFixed(2) + ' - ' + turma[i].estado;
+  for (const aluno of turma) {
+    const item = document.createElement('li');
+    item.textContent = aluno.nome + ' - ' + aluno.media.toFixed(2) + ' - ' + aluno.estado;
     lista.appendChild(item);
   }
 }
 
-function cadastrar() {
-  document.getElementById('btn-listar').classList.remove('active');
-  document.getElementById('btn-cadastrar').classList.add('active');
-  document.getElementById('tab-listar').classList.remove('active');
-  document.getElementById('tab-cadastrar').classList.add('active');
-}
+document.getElementById('form-aluno').addEventListener('submit', function(evento) {
+  evento.preventDefault();
+  salvar();
+});
