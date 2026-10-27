@@ -1,34 +1,29 @@
 class Aluno {
-  nome;
-  nota1;
-  nota2;
-  nota3;
-  estado;
-  media;
-
   constructor(nome, nota1, nota2, nota3) {
     this.nome = nome;
     this.nota1 = nota1;
     this.nota2 = nota2;
     this.nota3 = nota3;
+    this.media = null;
+    this.estado = '';
   }
 
-  gerarMedia(nota1, nota2, nota3) {
-    let m = (nota1 + nota2 + nota3) / 3;
-    this.media = m;
-    return m;
+  gerarMedia() {
+    this.media = (this.nota1 + this.nota2 + this.nota3) / 3;
+    return this.media;
   }
 
-  gerarEstado(media) {
-    let est;
-    if (media >= 6) {
-      est = 'Aprovado';
-    } else if (media >= 3) {
-      est = 'Recuperação';
+  gerarEstado() {
+    if (this.media === null) this.gerarMedia();
+    if (this.media >= 6) {
+      this.estado = 'Aprovado';
+    } else if (this.media >= 3) {
+      this.estado = 'Recuperação';
     } else {
-      est = 'Reprovado';
+      this.estado = 'Reprovado';
     }
-    this.estado = est;
-    return est;
+    return this.estado;
   }
 }
+
+if (typeof module !== 'undefined' && module.exports) module.exports = Aluno;
