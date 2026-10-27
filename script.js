@@ -50,6 +50,24 @@ function listar() {
   }
 }
 
+function aplicarTema(escuro) {
+  document.body.classList.toggle('dark-mode', escuro);
+  const botao = document.getElementById('btn-tema');
+  botao.textContent = escuro ? '☀️ Modo claro' : '🌙 Modo escuro';
+  botao.setAttribute('aria-label', escuro ? 'Ativar modo claro' : 'Ativar modo escuro');
+  botao.setAttribute('aria-pressed', String(escuro));
+}
+
+const botaoTema = document.getElementById('btn-tema');
+let temaSalvo = null;
+try { temaSalvo = localStorage.getItem('tema-sistema-escolar'); } catch (erro) { /* Armazenamento indisponível. */ }
+aplicarTema(temaSalvo === 'escuro');
+botaoTema.addEventListener('click', function() {
+  const escuro = !document.body.classList.contains('dark-mode');
+  aplicarTema(escuro);
+  try { localStorage.setItem('tema-sistema-escolar', escuro ? 'escuro' : 'claro'); } catch (erro) { /* Mantém a troca na sessão atual. */ }
+});
+
 document.getElementById('form-aluno').addEventListener('submit', function(evento) {
   evento.preventDefault();
   salvar();
